@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Gym-App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="GYMAPP">GYMAPP</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Apellidos">Apellidos</string>
+    <string name="FechaNac">Fecha Nac.</string>
+    <string name="Continuar">Continuar</string>
+    <string name="Volver">Volver</string>
 </resources>
