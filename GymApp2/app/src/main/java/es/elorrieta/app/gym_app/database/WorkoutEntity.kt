@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import java.net.URL
 
 @Entity(
+    tableName = "t_workouts",
     foreignKeys = [
         ForeignKey(
             entity = UsuarioEntity::class,
