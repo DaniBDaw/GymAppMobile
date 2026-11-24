@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fondo_pantalla">#121212</color>
+    <color name="fondo_tarjeta">#1E1E1E</color>
+    <color name="fondo_tarjeta_home">#262626</color>
+    <color name="fondo_oscuro">#2A2A2A</color>
+    <color name="fondo_bloqueado">#2A2A2A</color>
+
+    <color name="texto_principal">#FFFFFF</color>
+    <color name="texto_secundario">#99FFFFFF</color>
+    <color name="texto_placeholder">#8A8A8A</color>
+
+    <color name="borde_input">#6B6B6B</color>
+    <color name="linea">#333333</color>
+
+    <color name="completado">#2E5E35</color>
+    <color name="error">#EF5350</color>
+
+    <color name="boton_principal">#FFFFFF</color>
+    <color name="boton_principal_texto">#000000</color>
+</resources>
