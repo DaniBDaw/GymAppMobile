@@ -1,6 +1,12 @@
 package es.elorrieta.app.gym_app
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +17,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,6 +28,8 @@ import es.elorrieta.app.gym_app.database.AppDatabase
 import es.elorrieta.app.gym_app.database.UsuarioEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 import java.util.Calendar
 
 class PerfilFragment : Fragment() {
@@ -42,6 +53,32 @@ class PerfilFragment : Fragment() {
         R.color.nivel_experto
     )
 
+    // Callback: respuesta del usuario al pedirle permiso de cámara
+    private val lanzadorPermiso = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+        object : ActivityResultCallback<Boolean> {
+            override fun onActivityResult(concedido: Boolean) {
+                if (concedido) {
+                    abrirCamara()
+                } else {
+                    mostrarMensaje(R.string.camara_permiso_denegado)
+                }
+            }
+        }
+    )
+
+    // Callback: la cámara nos devuelve la foto (o null si se cancela)
+    private val lanzadorCamara = registerForActivityResult(
+        ActivityResultContracts.TakePicturePreview(),
+        object : ActivityResultCallback<Bitmap?> {
+            override fun onActivityResult(foto: Bitmap?) {
+                if (foto != null) {
+                    guardarFoto(foto)
+                }
+            }
+        }
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,6 +99,7 @@ class PerfilFragment : Fragment() {
         configurarIdioma(view)
         configurarFecha(view)
         configurarGuardar(view)
+        configurarFoto(view)
         cargarUsuario(view)
 
         return view
@@ -126,6 +164,7 @@ class PerfilFragment : Fragment() {
         view.findViewById<EditText>(R.id.etEmail).setText(usuario.mail)
         view.findViewById<EditText>(R.id.etFecha).setText(usuario.fechaNac)
         mostrarNivel(view, usuario.nivel)
+        cargarFoto()
     }
 
     private fun mostrarNivel(view: View, nivel: Int) {
@@ -146,6 +185,122 @@ class PerfilFragment : Fragment() {
 
         val imgNivel = view.findViewById<ImageView>(R.id.imgNivel)
         imgNivel.setColorFilter(color)
+    }
+
+    // ---------------- FOTO ----------------
+
+    private fun configurarFoto(view: View) {
+        val btnCamara = view.findViewById<Button>(R.id.btnCamara)
+        btnCamara.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                pedirCamara()
+            }
+        })
+
+        val btnBorrarFoto = view.findViewById<Button>(R.id.btnBorrarFoto)
+        btnBorrarFoto.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                confirmarBorrarFoto()
+            }
+        })
+    }
+
+    private fun pedirCamara() {
+        // ¿El móvil tiene cámara?
+        if (!requireContext().packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+            mostrarMensaje(R.string.camara_no_disponible)
+            return
+        }
+
+        // ¿Ya tenemos permiso? Si no, lo pedimos en tiempo de ejecución
+        val permiso = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+        if (permiso == PackageManager.PERMISSION_GRANTED) {
+            abrirCamara()
+        } else {
+            lanzadorPermiso.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    private fun abrirCamara() {
+        // Intent a la cámara del móvil; la respuesta llega a lanzadorCamara
+        lanzadorCamara.launch(null)
+    }
+
+    // Fichero de la foto del usuario: foto_ID.png en el almacenamiento interno de la App
+    private fun obtenerFicheroFoto(): File? {
+        val usuario = usuarioActual
+        if (usuario == null) {
+            return null
+        }
+        return File(requireContext().filesDir, "foto_" + usuario.id + ".png")
+    }
+
+    private fun guardarFoto(foto: Bitmap) {
+        val fichero = obtenerFicheroFoto()
+        if (fichero == null) {
+            mostrarMensaje(R.string.camara_error)
+            return
+        }
+
+        try {
+            val salida = FileOutputStream(fichero)
+            foto.compress(Bitmap.CompressFormat.PNG, 100, salida)
+            salida.close()
+            mostrarFoto(foto)
+        } catch (e: Exception) {
+            mostrarMensaje(R.string.camara_error)
+        }
+    }
+
+    private fun cargarFoto() {
+        val fichero = obtenerFicheroFoto()
+        if (fichero != null && fichero.exists()) {
+            val foto = BitmapFactory.decodeFile(fichero.absolutePath)
+            if (foto != null) {
+                mostrarFoto(foto)
+                return
+            }
+        }
+        // Si no hay foto, silueta genérica
+        mostrarSilueta()
+    }
+
+    private fun mostrarFoto(foto: Bitmap) {
+        val imgFoto = requireView().findViewById<ImageView>(R.id.imgFoto)
+        imgFoto.imageTintList = null
+        imgFoto.setPadding(0, 0, 0, 0)
+        imgFoto.setImageBitmap(foto)
+    }
+
+    private fun mostrarSilueta() {
+        val imgFoto = requireView().findViewById<ImageView>(R.id.imgFoto)
+        imgFoto.setImageResource(R.drawable.ic_perfil)
+
+        // 20dp de margen interior pasados a píxeles
+        val margen = (20 * resources.displayMetrics.density).toInt()
+        imgFoto.setPadding(margen, margen, margen, margen)
+
+        val gris = ContextCompat.getColor(requireContext(), R.color.texto_placeholder)
+        imgFoto.imageTintList = ColorStateList.valueOf(gris)
+    }
+
+    private fun confirmarBorrarFoto() {
+        val fichero = obtenerFicheroFoto()
+        if (fichero == null || !fichero.exists()) {
+            return
+        }
+
+        // Aviso de "¿Seguro que deseas borrar?"
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.confirmar_borrar)
+            .setPositiveButton(R.string.borrar, object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    fichero.delete()
+                    mostrarSilueta()
+                }
+            })
+            .setNegativeButton(R.string.cancelar, null)
+            .show()
     }
 
     // ---------------- FECHA (calendario) ----------------
