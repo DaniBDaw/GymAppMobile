@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val cbRecordar = findViewById<CheckBox>(R.id.cbRecordar)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val btnRegistrarse = findViewById<Button>(R.id.btnRegistrarse)
+        val btnRegistro = findViewById<Button>(R.id.btnRegistro)
 
         val usuarioDao = AppDatabase.getDatabase(this).usuarioDao()
         val prefs = PrefsManager(this)
@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        btnRegistrarse.setOnClickListener {
+        btnRegistro.setOnClickListener {
             val intent = Intent(this, Registro::class.java)
             registroLauncher.launch(intent)
         }
