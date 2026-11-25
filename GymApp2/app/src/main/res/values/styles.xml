@@ -58,4 +58,31 @@
         <item name="android:background">@drawable/fondo_tarjeta</item>
         <item name="android:padding">14dp</item>
     </style>
+
+    <!-- Etiqueta pequeña encima de cada campo -->
+    <style name="Etiqueta">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/texto_secundario</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <!-- Cada opción de los selectores (CLARO / OSCURO, ES / EN / KA) -->
+    <style name="OpcionSelector">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/texto_principal</item>
+    </style>
+
+    <!-- Para que la foto salga redonda -->
+    <style name="ImagenCircular">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
