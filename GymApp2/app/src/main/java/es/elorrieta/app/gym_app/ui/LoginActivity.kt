@@ -1,17 +1,20 @@
 package es.elorrieta.app.gym_app.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import es.elorrieta.app.gym_app.MainActivity
 import es.elorrieta.app.gym_app.R
-import es.elorrieta.app.gym_app.data.db.AppDatabase
-import es.elorrieta.app.gym_app.data.db.Usuario
 import es.elorrieta.app.gym_app.data.prefs.PrefsManager
+import es.elorrieta.app.gym_app.database.AppDatabase
+import es.elorrieta.app.gym_app.database.UsuarioEntity
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -24,35 +27,79 @@ class LoginActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val cbRecordar = findViewById<CheckBox>(R.id.cbRecordar)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val btnRegistrarse = findViewById<Button>(R.id.btnRegistrarse)
 
-        val db = AppDatabase(this)
+        val usuarioDao = AppDatabase.getDatabase(this).usuarioDao()
         val prefs = PrefsManager(this)
 
+        // Recoge el email devuelto por Registro.kt cuando el usuario completa el alta
+        val registroLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val emailRegistrado = result.data?.getStringExtra("email")
+                if (!emailRegistrado.isNullOrEmpty()) {
+                    etUsuario.setText(emailRegistrado)
+                    etPassword.text.clear()
+                    etPassword.requestFocus()
+                }
+            }
+        }
 
+        // Usuarios de prueba iniciales (un Cliente y un Entrenador)
         lifecycleScope.launch {
-            if (db.usuarioDao().login("cliente@gym.com", "1234") == null) {
-                db.usuarioDao().insertar(
-                    Usuario(email = "cliente@gym.com", password = "1234", tipoUsuario = "Cliente")
+            if (usuarioDao.getUserByMail("cliente@gym.com") == null) {
+                usuarioDao.insertUser(
+                    UsuarioEntity(
+                        nombre = "Asier",
+                        apellidos = "Cliente",
+                        mail = "cliente@gym.com",
+                        fechaNac = "01/01/2000",
+                        contra = "1234",
+                        nivel = 1,
+                        isEntrenador = false
+                    )
                 )
             }
-            if (db.usuarioDao().login("entrenador@gym.com", "1234") == null) {
-                db.usuarioDao().insertar(
-                    Usuario(email = "entrenador@gym.com", password = "1234", tipoUsuario = "Entrenador")
+            if (usuarioDao.getUserByMail("entrenador@gym.com") == null) {
+                usuarioDao.insertUser(
+                    UsuarioEntity(
+                        nombre = "Coach",
+                        apellidos = "Elorrieta",
+                        mail = "entrenador@gym.com",
+                        fechaNac = "01/01/1990",
+                        contra = "1234",
+                        nivel = 5,
+                        isEntrenador = true
+                    )
                 )
             }
         }
 
-
+        // 1. Precargar email y contraseña si "Recuérdame" estaba activo
         if (prefs.isRememberMeActivo()) {
             etUsuario.setText(prefs.getLoginGuardado())
             etPassword.setText(prefs.getPasswordGuardada())
             cbRecordar.isChecked = true
         }
 
+        // Borrar campos y preferencias si se desmarca el CheckBox
+        cbRecordar.setOnCheckedChangeListener { _, isChecked ->
+            if (!isChecked) {
+                etUsuario.text.clear()
+                etPassword.text.clear()
+                prefs.borrarRememberMe()
+            }
+        }
 
+        // 2. Ir a la pantalla de Registro de tu compañero
+        btnRegistrarse.setOnClickListener {
+            val intent = Intent(this, Registro::class.java)
+            registroLauncher.launch(intent)
+        }
+
+        // 3. Validar credenciales contra Room
         btnLogin.setOnClickListener {
-            val email = etUsuario.text.toString().trim()
-            val password = etPassword.text.toString().trim()
+            val email = etUsuario.text.toString().trim().lowercase()
+            val password = etPassword.text.toString()
 
             if (email.isEmpty()) {
                 etUsuario.error = "Introduce tu email"
@@ -64,10 +111,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launch {
-                val usuarioValido = db.usuarioDao().login(email, password)
+                val usuario = usuarioDao.getUserByMail(email)
 
-                if (usuarioValido != null) {
-                    prefs.guardarSesionActual(usuarioValido.email)
+                if (usuario != null && usuario.contra == password) {
+                    prefs.guardarSesionActual(usuario.mail)
 
                     if (cbRecordar.isChecked) {
                         prefs.guardarRememberMe(email, password)
@@ -75,15 +122,19 @@ class LoginActivity : AppCompatActivity() {
                         prefs.borrarRememberMe()
                     }
 
-
-                    if (usuarioValido.tipoUsuario == "Cliente") {
-                        Toast.makeText(this@LoginActivity, "Bienvenido Cliente", Toast.LENGTH_SHORT).show()
-
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    // Comprobar rol en la BD (isEntrenador)
+                    if (usuario.isEntrenador) {
+                        Toast.makeText(this@LoginActivity, "Bienvenido Entrenador ${usuario.nombre}", Toast.LENGTH_SHORT).show()
+                        // Cambiar MainActivity por EntrenadorActivity cuando esté disponible
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.putExtra("USER_ID", usuario.id)
+                        startActivity(intent)
                     } else {
-                        Toast.makeText(this@LoginActivity, "Bienvenido Entrenador", Toast.LENGTH_SHORT).show()
-
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
+                        // Cambiar MainActivity por WorkoutsActivity cuando esté disponible
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.putExtra("USER_ID", usuario.id)
+                        startActivity(intent)
                     }
                     finish()
                 } else {
