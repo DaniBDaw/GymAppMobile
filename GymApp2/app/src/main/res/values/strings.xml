@@ -1,8 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Gym-App</string>
 
+    <!-- General -->
+    <string name="app_name" translatable="false">Gym-App</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="volver">Volver</string>
+    <string name="borrar">Borrar</string>
+    <string name="editar">Editar</string>
+    <string name="crear">Crear</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="cargando">Cargando…</string>
+    <string name="buscar">Buscar</string>
+    <string name="confirmar_borrar">¿Seguro que deseas borrar?</string>
+
+    <!-- Menú inferior -->
     <string name="menu_home">Inicio</string>
     <string name="menu_completados">Completados</string>
     <string name="menu_workouts">Workouts</string>
     <string name="menu_perfil">Perfil</string>
+
+    <!-- Cabecera y niveles -->
+    <string name="nivel_usuario">Nivel: %1$s</string>
+    <string name="nivel_novato">Novato</string>
+    <string name="nivel_principiante">Principiante</string>
+    <string name="nivel_intermedio">Intermedio</string>
+    <string name="nivel_avanzado">Avanzado</string>
+    <string name="nivel_experto">Experto</string>
+    <string name="nivel_subido">¡Has subido a nivel %1$s!</string>
+    <string name="nivel_bajado">Has bajado a nivel %1$s</string>
+
+    <!-- Login -->
+    <string name="login_titulo">Iniciar sesión</string>
+    <string name="login_usuario">Usuario</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_tipo_usuario">Tipo de usuario</string>
+    <string name="tipo_cliente">Cliente</string>
+    <string name="tipo_entrenador">Entrenador</string>
+    <string name="login_recordar">Recordarme</string>
+    <string name="login_entrar">Entrar</string>
+    <string name="login_no_cuenta">¿No tienes cuenta?</string>
+    <string name="login_registrarse">Regístrate</string>
+
+    <!-- Registro -->
+    <string name="registro_titulo">Crear cuenta</string>
+    <string name="registro_nombre">Nombre</string>
+    <string name="registro_apellidos">Apellidos</string>
+    <string name="registro_email">Email</string>
+    <string name="registro_password">Contraseña</string>
+    <string name="registro_repetir_password">Repetir contraseña</string>
+    <string name="registro_fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="registro_foto">Hacer foto</string>
+    <string name="registro_boton">Registrarse</string>
+    <string name="registro_ok">Usuario registrado correctamente</string>
+
+    <!-- Workouts -->
+    <string name="workouts_titulo">Workouts</string>
+    <string name="workouts_disponibles">%1$d workouts disponibles</string>
+    <string name="workouts_filtro_nivel">Filtrar por nivel</string>
+    <string name="workouts_todos">Todos</string>
+    <string name="workout_completado">Completado</string>
+    <string name="workout_pendiente">Pendiente</string>
+    <string name="workout_porcentaje">%1$d%% completado</string>
+    <string name="workout_ver_video">Ver vídeo</string>
+    <string name="workout_sin_video">Sin vídeo</string>
+    <string name="workouts_entrenador">Modo entrenador</string>
+
+    <!-- Ejercicios -->
+    <string name="ejercicios_titulo">Ejercicios</string>
+    <string name="ejercicios_filtro">Filtrar por nombre</string>
+    <string name="ejercicio_tiempo">%1$d min</string>
+    <string name="completar_workout">Marcar workout como completado</string>
+    <string name="desmarcar_workout">Desmarcar workout</string>
+
+    <!-- Detalle del ejercicio -->
+    <string name="ejercicio_detalle_titulo">Detalle del ejercicio</string>
+    <string name="ejercicio_descripcion">Descripción</string>
+    <string name="ejercicio_workout">Workout: %1$s</string>
+    <string name="completar_ejercicio">Marcar como completado</string>
+    <string name="desmarcar_ejercicio">Desmarcar</string>
+
+    <!-- Perfil -->
+    <string name="perfil_titulo">Perfil</string>
+    <string name="perfil_datos">Datos personales</string>
+    <string name="perfil_login">Usuario: %1$s</string>
+    <string name="perfil_nivel">Nivel</string>
+    <string name="perfil_cambiar_foto">Cambiar foto</string>
+    <string name="perfil_borrar_foto">Borrar foto</string>
+    <string name="perfil_nueva_password">Nueva contraseña</string>
+    <string name="perfil_repetir_password">Repetir contraseña</string>
+    <string name="perfil_tema">Tema</string>
+    <string name="tema_claro">Claro</string>
+    <string name="tema_oscuro">Oscuro</string>
+    <string name="perfil_idioma">Idioma</string>
+    <string name="idioma_es" translatable="false">Español</string>
+    <string name="idioma_eu" translatable="false">Euskara</string>
+    <string name="idioma_en" translatable="false">English</string>
+    <string name="perfil_guardar">Guardar cambios</string>
+    <string name="perfil_guardado">Cambios guardados</string>
+    <string name="perfil_cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Completados -->
+    <string name="completados_titulo">Completados</string>
+    <string name="completados_subtitulo">Tu historial de entrenamientos</string>
+    <string name="completados_workouts">Workouts</string>
+    <string name="completados_tiempo">Tiempo</string>
+    <string name="completados_media">Media</string>
+    <string name="filtro_semana">Semana</string>
+    <string name="filtro_mes">Mes</string>
+    <string name="filtro_todo">Todo</string>
+    <string name="completados_vacio">Aún no has completado ningún workout</string>
+
+    <!-- Entrenador -->
+    <string name="entrenador_titulo">Entrenador</string>
+    <string name="entrenador_workouts">Workouts</string>
+    <string name="entrenador_ejercicios">Ejercicios</string>
+    <string name="entrenador_nuevo_workout">Nuevo workout</string>
+    <string name="entrenador_nuevo_ejercicio">Nuevo ejercicio</string>
+    <string name="entrenador_nombre">Nombre</string>
+    <string name="entrenador_nivel">Nivel</string>
+    <string name="entrenador_video">URL del vídeo (opcional)</string>
+    <string name="entrenador_descripcion">Descripción</string>
+    <string name="entrenador_tiempo">Tiempo estimado (min)</string>
+    <string name="entrenador_guardado">Guardado correctamente</string>
+    <string name="entrenador_borrado">Borrado correctamente</string>
+
+    <!-- Cámara -->
+    <string name="camara_permiso_denegado">Sin permiso de cámara no se puede hacer la foto</string>
+    <string name="camara_no_disponible">Este dispositivo no tiene cámara</string>
+    <string name="camara_error">No se pudo obtener la foto</string>
+
+    <!-- Errores -->
+    <string name="error_campos_vacios">Rellena todos los campos</string>
+    <string name="error_login">Usuario o contraseña incorrectos</string>
+    <string name="error_usuario_existe">Ese usuario ya existe</string>
+    <string name="error_email">Email no válido</string>
+    <string name="error_password_no_coincide">Las contraseñas no coinciden</string>
+    <string name="error_fecha">Fecha no válida</string>
+    <string name="error_sin_workouts">No hay workouts disponibles</string>
+    <string name="error_sin_ejercicios">Este workout no tiene ejercicios</string>
+    <string name="error_bd">Error al acceder a la base de datos</string>
+    <string name="error_sin_navegador">No hay ninguna app para abrir el vídeo</string>
+
+    <!-- Descripciones de imágenes (accesibilidad) -->
+    <string name="desc_logo">Logo de GymApp</string>
+    <string name="desc_foto_perfil">Foto de perfil</string>
 </resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="aceptar">კარგი</string>
+    <string name="cancelar">გაუქმება</string>
+    <string name="guardar">შენახვა</string>
+    <string name="volver">უკან</string>
+    <string name="borrar">წაშლა</string>
+    <string name="editar">რედაქტირება</string>
+    <string name="crear">შექმნა</string>
+    <string name="si">დიახ</string>
+    <string name="no">არა</string>
+    <string name="cargando">იტვირთება…</string>
+    <string name="buscar">ძებნა</string>
+    <string name="confirmar_borrar">ნამდვილად გსურთ წაშლა?</string>
+
+    <!-- Menú inferior -->
+    <string name="menu_home">მთავარი</string>
+    <string name="menu_completados">დასრულებული</string>
+    <string name="menu_workouts">ვარჯიშები</string>
+    <string name="menu_perfil">პროფილი</string>
+
+    <!-- Cabecera y niveles -->
+    <string name="nivel_usuario">დონე: %1$s</string>
+    <string name="nivel_novato">ახალბედა</string>
+    <string name="nivel_principiante">დამწყები</string>
+    <string name="nivel_intermedio">საშუალო</string>
+    <string name="nivel_avanzado">მოწინავე</string>
+    <string name="nivel_experto">ექსპერტი</string>
+    <string name="nivel_subido">თქვენ მიაღწიეთ დონეს: %1$s!</string>
+    <string name="nivel_bajado">თქვენ ჩამოხვედით დონეზე: %1$s</string>
+
+    <!-- Login -->
+    <string name="login_titulo">შესვლა</string>
+    <string name="login_usuario">მომხმარებელი</string>
+    <string name="login_password">პაროლი</string>
+    <string name="login_tipo_usuario">მომხმარებლის ტიპი</string>
+    <string name="tipo_cliente">კლიენტი</string>
+    <string name="tipo_entrenador">მწვრთნელი</string>
+    <string name="login_recordar">დამიმახსოვრე</string>
+    <string name="login_entrar">შესვლა</string>
+    <string name="login_no_cuenta">არ გაქვთ ანგარიში?</string>
+    <string name="login_registrarse">რეგისტრაცია</string>
+
+    <!-- Registro -->
+    <string name="registro_titulo">ანგარიშის შექმნა</string>
+    <string name="registro_nombre">სახელი</string>
+    <string name="registro_apellidos">გვარი</string>
+    <string name="registro_email">ელფოსტა</string>
+    <string name="registro_password">პაროლი</string>
+    <string name="registro_repetir_password">გაიმეორეთ პაროლი</string>
+    <string name="registro_fecha_nacimiento">დაბადების თარიღი</string>
+    <string name="registro_foto">ფოტოს გადაღება</string>
+    <string name="registro_boton">რეგისტრაცია</string>
+    <string name="registro_ok">მომხმარებელი წარმატებით დარეგისტრირდა</string>
+
+    <!-- Workouts -->
+    <string name="workouts_titulo">ვარჯიშები</string>
+    <string name="workouts_disponibles">ხელმისაწვდომია %1$d ვარჯიში</string>
+    <string name="workouts_filtro_nivel">დონის მიხედვით ფილტრი</string>
+    <string name="workouts_todos">ყველა</string>
+    <string name="workout_completado">დასრულებული</string>
+    <string name="workout_pendiente">მოლოდინში</string>
+    <string name="workout_porcentaje">%1$d%% დასრულებულია</string>
+    <string name="workout_ver_video">ვიდეოს ნახვა</string>
+    <string name="workout_sin_video">ვიდეოს გარეშე</string>
+    <string name="workouts_entrenador">მწვრთნელის რეჟიმი</string>
+
+    <!-- Ejercicios -->
+    <string name="ejercicios_titulo">სავარჯიშოები</string>
+    <string name="ejercicios_filtro">სახელის მიხედვით ფილტრი</string>
+    <string name="ejercicio_tiempo">%1$d წთ</string>
+    <string name="completar_workout">ვარჯიშის დასრულებულად მონიშვნა</string>
+    <string name="desmarcar_workout">მონიშვნის მოხსნა</string>
+
+    <!-- Detalle del ejercicio -->
+    <string name="ejercicio_detalle_titulo">სავარჯიშოს დეტალები</string>
+    <string name="ejercicio_descripcion">აღწერა</string>
+    <string name="ejercicio_workout">ვარჯიში: %1$s</string>
+    <string name="completar_ejercicio">დასრულებულად მონიშვნა</string>
+    <string name="desmarcar_ejercicio">მონიშვნის მოხსნა</string>
+
+    <!-- Perfil -->
+    <string name="perfil_titulo">პროფილი</string>
+    <string name="perfil_datos">პირადი მონაცემები</string>
+    <string name="perfil_login">მომხმარებელი: %1$s</string>
+    <string name="perfil_nivel">დონე</string>
+    <string name="perfil_cambiar_foto">ფოტოს შეცვლა</string>
+    <string name="perfil_borrar_foto">ფოტოს წაშლა</string>
+    <string name="perfil_nueva_password">ახალი პაროლი</string>
+    <string name="perfil_repetir_password">გაიმეორეთ პაროლი</string>
+    <string name="perfil_tema">თემა</string>
+    <string name="tema_claro">ღია</string>
+    <string name="tema_oscuro">მუქი</string>
+    <string name="perfil_idioma">ენა</string>
+    <string name="perfil_guardar">ცვლილებების შენახვა</string>
+    <string name="perfil_guardado">ცვლილებები შენახულია</string>
+    <string name="perfil_cerrar_sesion">გასვლა</string>
+
+    <!-- Completados -->
+    <string name="completados_titulo">დასრულებული</string>
+    <string name="completados_subtitulo">თქვენი ვარჯიშების ისტორია</string>
+    <string name="completados_workouts">ვარჯიშები</string>
+    <string name="completados_tiempo">დრო</string>
+    <string name="completados_media">საშუალო</string>
+    <string name="filtro_semana">კვირა</string>
+    <string name="filtro_mes">თვე</string>
+    <string name="filtro_todo">ყველა</string>
+    <string name="completados_vacio">ჯერ არცერთი ვარჯიში არ დაგისრულებიათ</string>
+
+    <!-- Entrenador -->
+    <string name="entrenador_titulo">მწვრთნელი</string>
+    <string name="entrenador_workouts">ვარჯიშები</string>
+    <string name="entrenador_ejercicios">სავარჯიშოები</string>
+    <string name="entrenador_nuevo_workout">ახალი ვარჯიში</string>
+    <string name="entrenador_nuevo_ejercicio">ახალი სავარჯიშო</string>
+    <string name="entrenador_nombre">სახელი</string>
+    <string name="entrenador_nivel">დონე</string>
+    <string name="entrenador_video">ვიდეოს ბმული (არასავალდებულო)</string>
+    <string name="entrenador_descripcion">აღწერა</string>
+    <string name="entrenador_tiempo">სავარაუდო დრო (წთ)</string>
+    <string name="entrenador_guardado">წარმატებით შეინახა</string>
+    <string name="entrenador_borrado">წარმატებით წაიშალა</string>
+
+    <!-- Cámara -->
+    <string name="camara_permiso_denegado">კამერის ნებართვის გარეშე ფოტოს გადაღება შეუძლებელია</string>
+    <string name="camara_no_disponible">ამ მოწყობილობას კამერა არ აქვს</string>
+    <string name="camara_error">ფოტოს მიღება ვერ მოხერხდა</string>
+
+    <!-- Errores -->
+    <string name="error_campos_vacios">შეავსეთ ყველა ველი</string>
+    <string name="error_login">არასწორი მომხმარებელი ან პაროლი</string>
+    <string name="error_usuario_existe">ასეთი მომხმარებელი უკვე არსებობს</string>
+    <string name="error_email">არასწორი ელფოსტა</string>
+    <string name="error_password_no_coincide">პაროლები არ ემთხვევა</string>
+    <string name="error_fecha">არასწორი თარიღი</string>
+    <string name="error_sin_workouts">ვარჯიშები არ არის ხელმისაწვდომი</string>
+    <string name="error_sin_ejercicios">ამ ვარჯიშს სავარჯიშოები არ აქვს</string>
+    <string name="error_bd">მონაცემთა ბაზის შეცდომა</string>
+    <string name="error_sin_navegador">ვიდეოს გასახსნელი აპლიკაცია ვერ მოიძებნა</string>
+
+    <!-- Descripciones de imágenes (accesibilidad) -->
+    <string name="desc_logo">GymApp-ის ლოგო</string>
+    <string name="desc_foto_perfil">პროფილის ფოტო</string>
+</resources>
