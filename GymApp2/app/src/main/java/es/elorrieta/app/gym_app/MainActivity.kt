@@ -1,6 +1,5 @@
 package es.elorrieta.app.gym_app
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts

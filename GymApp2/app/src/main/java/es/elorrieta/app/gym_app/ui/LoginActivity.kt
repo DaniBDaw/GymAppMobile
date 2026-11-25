@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         val usuarioDao = AppDatabase.getDatabase(this).usuarioDao()
         val prefs = PrefsManager(this)
 
-        // Recoge el email devuelto por Registro.kt cuando el usuario completa el alta
+
         val registroLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val emailRegistrado = result.data?.getStringExtra("email")
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Usuarios de prueba iniciales (un Cliente y un Entrenador)
+
         lifecycleScope.launch {
             if (usuarioDao.getUserByMail("cliente@gym.com") == null) {
                 usuarioDao.insertUser(
@@ -74,14 +74,14 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // 1. Precargar email y contraseña si "Recuérdame" estaba activo
+
         if (prefs.isRememberMeActivo()) {
             etUsuario.setText(prefs.getLoginGuardado())
             etPassword.setText(prefs.getPasswordGuardada())
             cbRecordar.isChecked = true
         }
 
-        // Borrar campos y preferencias si se desmarca el CheckBox
+
         cbRecordar.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) {
                 etUsuario.text.clear()
@@ -90,13 +90,13 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // 2. Ir a la pantalla de Registro de tu compañero
+
         btnRegistrarse.setOnClickListener {
             val intent = Intent(this, Registro::class.java)
             registroLauncher.launch(intent)
         }
 
-        // 3. Validar credenciales contra Room
+
         btnLogin.setOnClickListener {
             val email = etUsuario.text.toString().trim().lowercase()
             val password = etPassword.text.toString()
