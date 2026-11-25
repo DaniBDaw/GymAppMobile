@@ -1,12 +1,13 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import es.elorrieta.app.gym_app.ui.LoginActivity
+import es.elorrieta.app.gym_app.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

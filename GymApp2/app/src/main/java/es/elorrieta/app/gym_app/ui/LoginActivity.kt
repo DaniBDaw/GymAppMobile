@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import es.elorrieta.app.gym_app.MainActivity
 import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.data.prefs.PrefsManager
 import es.elorrieta.app.gym_app.database.AppDatabase
