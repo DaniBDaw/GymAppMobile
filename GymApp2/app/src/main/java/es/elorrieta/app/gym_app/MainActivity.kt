@@ -11,11 +11,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        MenuInferior.configurar(this, MenuInferior.HOME)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        // Preparamos el menú inferior
+        MenuInferior.configurar(this)
+
+        // La primera vez cargamos el Home
+        if (savedInstanceState == null) {
+            MenuInferior.mostrar(this, MenuInferior.HOME)
         }
     }
 }

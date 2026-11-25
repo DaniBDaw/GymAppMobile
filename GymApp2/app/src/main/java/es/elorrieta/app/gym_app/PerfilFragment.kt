@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 
 class PerfilFragment : Fragment() {
 
@@ -23,7 +24,8 @@ class PerfilFragment : Fragment() {
         val btnVolver = view.findViewById<ImageView>(R.id.btnVolver)
         btnVolver.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                requireActivity().finish()
+                // Volvemos a la pantalla en la que estábamos antes
+                MenuInferior.mostrar(requireActivity() as AppCompatActivity, MenuInferior.pantallaAnterior)
             }
         })
 
