@@ -98,6 +98,10 @@
     <string name="perfil_guardado">Changes saved</string>
     <string name="perfil_cerrar_sesion">Log out</string>
 
+    <string name="perfil_camara">Camera</string>
+    <string name="perfil_email_login">Email (login)</string>
+    <string name="no_editable">Not editable</string>
+
     <!-- Completados -->
     <string name="completados_titulo">Completed</string>
     <string name="completados_subtitulo">Your workout history</string>

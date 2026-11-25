@@ -98,6 +98,10 @@
     <string name="perfil_guardado">ცვლილებები შენახულია</string>
     <string name="perfil_cerrar_sesion">გასვლა</string>
 
+    <string name="perfil_camara">კამერა</string>
+    <string name="perfil_email_login">ელფოსტა (ლოგინი)</string>
+    <string name="no_editable">არარედაქტირებადი</string>
+
     <!-- Completados -->
     <string name="completados_titulo">დასრულებული</string>
     <string name="completados_subtitulo">თქვენი ვარჯიშების ისტორია</string>

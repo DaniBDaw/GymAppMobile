@@ -102,6 +102,13 @@
     <string name="perfil_guardado">Cambios guardados</string>
     <string name="perfil_cerrar_sesion">Cerrar sesión</string>
 
+    <string name="perfil_camara">Cámara</string>
+    <string name="perfil_email_login">Email (login)</string>
+    <string name="no_editable">No editable</string>
+    <string name="idioma_cod_es" translatable="false">ES</string>
+    <string name="idioma_cod_en" translatable="false">EN</string>
+    <string name="idioma_cod_ka" translatable="false">KA</string>
+
     <!-- Completados -->
     <string name="completados_titulo">Completados</string>
     <string name="completados_subtitulo">Tu historial de entrenamientos</string>
