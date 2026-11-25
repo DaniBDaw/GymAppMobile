@@ -73,6 +73,10 @@
     <string name="ejercicio_tiempo">%1$d min</string>
     <string name="completar_workout">Mark workout as completed</string>
     <string name="desmarcar_workout">Unmark workout</string>
+    <string name="ejercicios_buscar">Search exercise</string>
+    <string name="ejercicios_progreso">%1$d / %2$d completed</string>
+    <string name="workout_resumen">%1$s · %2$d exercises · %3$d min</string>
+    <string name="ejercicio_resumen">%1$d sets · %2$d min</string>
 
     <!-- Detalle del ejercicio -->
     <string name="ejercicio_detalle_titulo">Exercise details</string>

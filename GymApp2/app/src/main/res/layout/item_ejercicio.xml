@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fondoItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/fondo_tarjeta"
+    android:gravity="center_vertical"
+    android:minHeight="60dp"
+    android:orientation="horizontal">
+
+    <!-- Franja de color del nivel -->
+    <View
+        android:id="@+id/franjaNivel"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/nivel_novato" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/txtNombreEjercicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/righteous"
+            android:textColor="@color/texto_principal"
+            android:textSize="16sp"
+            app:fontFamily="@font/righteous" />
+
+        <TextView
+            android:id="@+id/txtInfoEjercicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/texto_secundario"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/chkCompletado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:buttonTint="@color/texto_principal" />
+</LinearLayout>
