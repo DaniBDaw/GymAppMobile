@@ -26,6 +26,6 @@
     <color name="nivel_avanzado">#BE1E2D</color>
     <color name="nivel_experto">#6F2DA8</color>
 
-    <color name="boton_principal">#FFFFFF</color>
-    <color name="boton_principal_texto">#000000</color>
+    <color name="boton_principal">#000000</color>
+    <color name="boton_principal_texto">#FFFFFF</color>
 </resources>
