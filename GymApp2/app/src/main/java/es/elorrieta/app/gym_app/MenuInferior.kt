@@ -83,6 +83,10 @@ object MenuInferior {
         val intent = Intent(activity, destino)
         activity.startActivity(intent)
         activity.overridePendingTransition(0, 0) // sin animación entre pestañas
-        activity.finish()
+
+        // Al ir al Perfil no cerramos la pantalla actual, para poder volver a ella
+        if (destino != PerfilActivity::class.java) {
+            activity.finish()
+        }
     }
 }
