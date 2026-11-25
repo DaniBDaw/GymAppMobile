@@ -68,4 +68,23 @@ object Ajustes {
         val idiomas = LocaleListCompat.forLanguageTags(idioma)
         AppCompatDelegate.setApplicationLocales(idiomas)
     }
+
+
+
+
+    // ---------------- USUARIO LOGUEADO ----------------
+
+    const val CLAVE_ID_USUARIO = "id_usuario"
+
+    // El Login llama a esto cuando el usuario entra bien
+    fun guardarIdUsuario(context: Context, id: Long) {
+        val prefs = context.getSharedPreferences(FICHERO, Context.MODE_PRIVATE)
+        prefs.edit().putLong(CLAVE_ID_USUARIO, id).apply()
+    }
+
+    // Devuelve el id del usuario logueado (-1 si no hay ninguno)
+    fun leerIdUsuario(context: Context): Long {
+        val prefs = context.getSharedPreferences(FICHERO, Context.MODE_PRIVATE)
+        return prefs.getLong(CLAVE_ID_USUARIO, -1L)
+    }
 }
