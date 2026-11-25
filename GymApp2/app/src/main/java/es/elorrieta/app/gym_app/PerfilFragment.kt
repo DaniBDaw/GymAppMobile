@@ -27,7 +27,9 @@ class PerfilFragment : Fragment() {
             }
         })
 
+        configurarIdioma(view)
         configurarTema(view)
+
 
         return view
     }
@@ -60,6 +62,52 @@ class PerfilFragment : Fragment() {
             }
         })
     }
+
+
+
+    // ---------------- IDIOMA ----------------
+
+    private fun configurarIdioma(view: View) {
+        val btnIdiomaEs = view.findViewById<TextView>(R.id.btnIdiomaEs)
+        val btnIdiomaEn = view.findViewById<TextView>(R.id.btnIdiomaEn)
+        val btnIdiomaKa = view.findViewById<TextView>(R.id.btnIdiomaKa)
+        val opcionesIdioma = arrayOf(btnIdiomaEs, btnIdiomaEn, btnIdiomaKa)
+
+        // Marcamos el idioma que está guardado
+        val idiomaGuardado = Ajustes.leerIdioma(requireContext())
+        if (idiomaGuardado == Ajustes.IDIOMA_EN) {
+            marcarOpcion(btnIdiomaEn, opcionesIdioma)
+        } else if (idiomaGuardado == Ajustes.IDIOMA_KA) {
+            marcarOpcion(btnIdiomaKa, opcionesIdioma)
+        } else {
+            marcarOpcion(btnIdiomaEs, opcionesIdioma)
+        }
+
+        btnIdiomaEs.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                cambiarIdioma(Ajustes.IDIOMA_ES)
+            }
+        })
+
+        btnIdiomaEn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                cambiarIdioma(Ajustes.IDIOMA_EN)
+            }
+        })
+
+        btnIdiomaKa.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                cambiarIdioma(Ajustes.IDIOMA_KA)
+            }
+        })
+    }
+
+    private fun cambiarIdioma(idioma: String) {
+        Ajustes.guardarIdioma(requireContext(), idioma)
+        Ajustes.aplicarIdioma(idioma)
+    }
+
+
 
     // Pone en negro la opción elegida y deja las demás sin fondo
     private fun marcarOpcion(seleccionada: TextView, opciones: Array<TextView>) {

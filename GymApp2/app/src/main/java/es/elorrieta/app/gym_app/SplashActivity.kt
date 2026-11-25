@@ -14,6 +14,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         Ajustes.aplicarTema(Ajustes.leerTema(this))
+        Ajustes.aplicarIdioma(Ajustes.leerIdioma(this))
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
