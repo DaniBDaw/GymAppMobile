@@ -27,6 +27,11 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import android.util.Patterns
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+import java.io.File
+import java.io.FileOutputStream
 
 class Registro : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +76,7 @@ class Registro : AppCompatActivity() {
         cameraIcon.visibility = View.GONE
 
         var paso = 1
+        var fotoTomada: Bitmap? = null
 
         // NUEVO: devuelve el email sin espacios y en minúsculas.
         // Así "Ana@mail.com" y " ana@mail.com" se consideran el mismo email
@@ -97,7 +103,7 @@ class Registro : AppCompatActivity() {
                 email.visibility = View.VISIBLE
                 contra.visibility = View.VISIBLE
                 confirmContra.visibility = View.VISIBLE
-                continuar.setText(R.string.Continuar)
+                continuar.setText(R.string.continuar)
             } else if (paso == 3) {
                 nombre.visibility = View.GONE
                 apellido.visibility = View.GONE
@@ -108,7 +114,7 @@ class Registro : AppCompatActivity() {
                 confirmContra.visibility = View.GONE
 
                 cameraIcon.visibility = View.VISIBLE
-                continuar.setText(R.string.Completar)
+                continuar.setText(R.string.registro_boton)
             }
         }
 
@@ -119,7 +125,7 @@ class Registro : AppCompatActivity() {
 
             // Patterns.EMAIL_ADDRESS valida que sea email, no sé que conlleva eso pero funciona
             if (!Patterns.EMAIL_ADDRESS.matcher(emailActual).matches()) {
-                email.error = "Introduce un email válido"
+                email.error = getString(R.string.error_email)
                 return
             }
 
@@ -138,12 +144,27 @@ class Registro : AppCompatActivity() {
 
                 if (usuarioExistente != null) {
                     // .error muestra un aviso rojo en el propio EditText
-                    email.error = "Ya existe un usuario con ese email"
+                    email.error = getString((R.string.error_usuario_existe))
                 } else {
                     paso++
                     Log.d("patata", "gestionarPaso: " + paso)
                     actualizarVista()
                 }
+            }
+        }
+
+        fun guardarFoto(idUsuario: Long) {
+            val foto = fotoTomada
+            if (foto == null) {
+                return
+            }
+            try {
+                val fichero = File(filesDir, "foto_" + idUsuario + ".png")
+                val salida = FileOutputStream(fichero)
+                foto.compress(Bitmap.CompressFormat.PNG, 100, salida)
+                salida.close()
+            } catch (e: Exception) {
+                Toast.makeText(this, getString(R.string.camara_error), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -169,10 +190,11 @@ class Registro : AppCompatActivity() {
                 try {
                     // insertUser guarda el usuario y devuelve el id que se le ha asignado
                     val id = usuarioDao.insertUser(usuario)
+                    guardarFoto(id)
                     Log.d("patata", "Usuario insertado con id: " + id)
 
                     // Toast: mensaje corto que aparece abajo de la pantalla
-                    Toast.makeText(this@Registro, "Usuario registrado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Registro, getString(R.string.registro_ok), Toast.LENGTH_SHORT).show()
 
                     // setResult devuelve datos a la pantalla que abrió el registro (MainActivity).
                     // Le pasamos el email para que en el futuro el Login lo pueda rellenar solo.
@@ -187,7 +209,7 @@ class Registro : AppCompatActivity() {
                     // guardar uno repetido, la BD lanza este error y volvemos al paso del email.
                     paso = 2
                     actualizarVista()
-                    email.error = "Ya existe un usuario con ese email"
+                    email.error = getString(R.string.error_usuario_existe)
                     continuar.isEnabled = true
                 }
             }
@@ -197,12 +219,12 @@ class Registro : AppCompatActivity() {
             if (sig) {
                 if (paso == 1) {
                     if (nombre.text.isNullOrBlank() || apellido.text.isNullOrBlank() || nacFecha.text.isNullOrBlank()) {
-                        nombre.setText(getString(R.string.ErrorPrueba))
+                        nombre.setText(getString(R.string.error_campos_vacios))
                         return
                     }
                 } else if (paso == 2) {
                     if (email.text.isNullOrBlank() || contra.text.isNullOrBlank() || confirmContra.text.isNullOrBlank() || contra.text.toString() != confirmContra.text.toString()) {
-                        email.setText(getString(R.string.ErrorPrueba))
+                        email.setText(getString(R.string.error_campos_vacios))
                         return
                     }
                     // NUEVO: la comprobación del email en la BD se encarga ella misma de avanzar
@@ -238,12 +260,27 @@ class Registro : AppCompatActivity() {
         val abrirCamara = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap: Bitmap? ->
             if (bitmap != null) {
                 // Aquí recibes la foto tomada y la muestras en el imageView donde estaba el icono
+                fotoTomada = bitmap
                 cameraIcon.setImageBitmap(bitmap)
             }
         }
 
+        val pedirPermisoCamara = registerForActivityResult(ActivityResultContracts.RequestPermission()) { concedido: Boolean ->
+            if (concedido) {
+                abrirCamara.launch()
+            } else {
+                Toast.makeText(this, getString(R.string.camara_permiso_denegado), Toast.LENGTH_SHORT).show()
+            }
+        }
+
         cameraIcon.setOnClickListener {
-            abrirCamara.launch()
+            if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                Toast.makeText(this, getString(R.string.camara_no_disponible), Toast.LENGTH_SHORT).show()
+            } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                abrirCamara.launch()
+            } else {
+                pedirPermisoCamara.launch(Manifest.permission.CAMERA)
+            }
         }
 
 

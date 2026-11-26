@@ -54,6 +54,7 @@
     <string name="registro_foto">ფოტოს გადაღება</string>
     <string name="registro_boton">რეგისტრაცია</string>
     <string name="registro_ok">მომხმარებელი წარმატებით დარეგისტრირდა</string>
+    <string name="continuar">გაგრძელება</string>
 
     <!-- Workouts -->
     <string name="workouts_titulo">ვარჯიშები</string>

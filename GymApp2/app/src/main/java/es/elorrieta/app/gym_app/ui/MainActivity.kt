@@ -1,12 +1,11 @@
 package es.elorrieta.app.gym_app.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import es.elorrieta.app.gym_app.MenuInferior
 import es.elorrieta.app.gym_app.R
 
 class MainActivity : AppCompatActivity() {
@@ -19,10 +18,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val getResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            }
-        val intent = Intent(this, LoginActivity::class.java)
-        getResult.launch(intent)
+
+        MenuInferior.configurar(this)
+        if (savedInstanceState == null) {
+            MenuInferior.mostrar(this, MenuInferior.HOME)
+        }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import es.elorrieta.app.gym_app.Ajustes
 import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.data.prefs.PrefsManager
 import es.elorrieta.app.gym_app.database.AppDatabase
@@ -114,6 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (usuario != null && usuario.contra == password) {
                     prefs.guardarSesionActual(usuario.mail)
+                    Ajustes.guardarIdUsuario(this@LoginActivity, usuario.id)
 
                     if (cbRecordar.isChecked) {
                         prefs.guardarRememberMe(email, password)
