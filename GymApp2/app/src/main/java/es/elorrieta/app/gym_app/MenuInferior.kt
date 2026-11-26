@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 object MenuInferior {
 
@@ -54,31 +55,44 @@ object MenuInferior {
 
     // Cambia el Fragment que se ve en el contenedor
     fun mostrar(activity: AppCompatActivity, pantalla: Int) {
-        val hayFragment = activity.supportFragmentManager.findFragmentById(R.id.fragment_container) != null
+        val gestor = activity.supportFragmentManager
+        val hayFragment = gestor.findFragmentById(R.id.fragment_container) != null
 
-        // Si ya estamos en esa pantalla, no hacemos nada
-        if (pantalla == pantallaActual && hayFragment) {
+        // Si ya estamos en esa pantalla (y no dentro de una hija), no hacemos nada
+        if (pantalla == pantallaActual && hayFragment && gestor.backStackEntryCount == 0) {
             return
         }
+
+        // Cerramos las pantallas hijas que hubiera abiertas (p.ej. Ejercicios)
+        gestor.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
         val fragment: Fragment
         if (pantalla == COMPLETADOS) {
             fragment = CompletadosFragment()
         } else if (pantalla == WORKOUTS) {
-            fragment = WorkoutsFragment()
+            fragment = TempWorkoutsFragment()
         } else if (pantalla == PERFIL) {
             fragment = PerfilFragment()
         } else {
             fragment = HomeFragment()
         }
 
-        activity.supportFragmentManager.beginTransaction()
+        gestor.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
 
         pantallaAnterior = pantallaActual
         pantallaActual = pantalla
         actualizarIconos(activity)
+    }
+
+    // Abre una pantalla "hija" encima de la actual (Ejercicios, Detalle...).
+    // addToBackStack hace que con "atrás" se vuelva a la anterior.
+    fun abrirSubpantalla(activity: AppCompatActivity, fragment: Fragment) {
+        activity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     // Pinta el icono activo y pone el punto debajo
