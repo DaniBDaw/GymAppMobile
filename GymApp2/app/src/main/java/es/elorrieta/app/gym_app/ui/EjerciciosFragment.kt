@@ -1,5 +1,12 @@
 package es.elorrieta.app.gym_app.ui
 
+
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +49,8 @@ class EjerciciosFragment : Fragment() {
     // Workout que estamos viendo y sus ejercicios
     private var workoutActual: WorkoutEntity? = null
     private var listaEjercicios: MutableList<EjercicioItem> = mutableListOf()
+    // Texto escrito en el buscador
+    private var textoBusqueda = ""
 
     // Adapter de la lista; aquí recibimos los clics de cada tarjeta
     private val adaptador =
@@ -76,6 +85,7 @@ class EjerciciosFragment : Fragment() {
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerEjercicios)
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adaptador
+        configurarBuscador(view)
 
         cargarDatos(view)
 
@@ -175,23 +185,50 @@ class EjerciciosFragment : Fragment() {
             getString(R.string.workout_resumen, nombreNivel, listaEjercicios.size, minutosTotales)
 
         // Botón de vídeo solo si el workout tiene vídeo
+        // Botón de vídeo solo si el workout tiene vídeo
         val btnVideo = view.findViewById<Button>(R.id.btnVideo)
         if (workout.video.isEmpty()) {
             btnVideo.visibility = View.GONE
         } else {
             btnVideo.visibility = View.VISIBLE
+            btnVideo.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View) {
+                    abrirVideo(workout.video)
+                }
+            })
         }
 
         adaptador.colorNivel = color
     }
 
-    // Repinta la lista y el estado (progreso, badge, botones)
+    // Repinta la lista (filtrada por el buscador) y el estado
     private fun refrescarLista() {
-        adaptador.update(listaEjercicios)
+        // Solo los ejercicios cuyo nombre contiene el texto buscado
+        val listaFiltrada = mutableListOf<EjercicioItem>()
+        for (item in listaEjercicios) {
+            if (item.ejercicio.nombre.lowercase().contains(textoBusqueda.lowercase())) {
+                listaFiltrada.add(item)
+            }
+        }
+        adaptador.update(listaFiltrada)
+
         val view = getView()
         if (view != null) {
             actualizarEstado(view)
         }
+    }
+
+    // Cada vez que se escribe en el buscador, se filtra la lista
+    private fun configurarBuscador(view: View) {
+        val etBuscar = view.findViewById<EditText>(R.id.etBuscar)
+        etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                textoBusqueda = s.toString().trim()
+                refrescarLista()
+            }
+        })
     }
 
     // Progreso, badge "Completado" y qué botón se ve
@@ -245,4 +282,16 @@ class EjerciciosFragment : Fragment() {
     private fun mostrarMensaje(idTexto: Int) {
         Toast.makeText(requireContext(), getString(idTexto), Toast.LENGTH_SHORT).show()
     }
+
+    // Abre el vídeo fuera de la App (YouTube o el navegador) con un Intent implícito
+    private fun abrirVideo(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // No hay ninguna App en el móvil que sepa abrir ese enlace
+            mostrarMensaje(R.string.error_sin_navegador)
+        }
+    }
+
 }
