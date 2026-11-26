@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import es.elorrieta.app.gym_app.ui.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -70,7 +71,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun irAlLogin() {
         // Cuando exista LoginActivity, cambiar MainActivity por LoginActivity
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()

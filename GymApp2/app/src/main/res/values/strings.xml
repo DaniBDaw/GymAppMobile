@@ -55,6 +55,7 @@
     <string name="registro_foto">Hacer foto</string>
     <string name="registro_boton">Registrarse</string>
     <string name="registro_ok">Usuario registrado correctamente</string>
+    <string name="continuar"> continuar</string>
 
     <!-- Workouts -->
     <string name="workouts_titulo">Workouts</string>

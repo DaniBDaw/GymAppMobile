@@ -115,33 +115,10 @@ class PerfilFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             var usuario: UsuarioEntity? = null
 
-            // 1. Buscamos el usuario logueado
+            // Buscamos el usuario logueado
             val idUsuario = Ajustes.leerIdUsuario(contexto)
             if (idUsuario != -1L) {
                 usuario = dao.getUserById(idUsuario)
-            }
-
-            // 2. SOLO PARA PRUEBAS: si no hay login, cogemos el primero de la BD
-            if (usuario == null) {
-                val usuarios = dao.getAllUsersSync()
-                if (usuarios.isNotEmpty()) {
-                    usuario = usuarios[0]
-                }
-            }
-
-            // 3. SOLO PARA PRUEBAS: si la BD está vacía, creamos uno
-            if (usuario == null) {
-                val usuarioPrueba = UsuarioEntity(
-                    nombre = "Carlos",
-                    apellidos = "Martínez Ruiz",
-                    mail = "carlos@gymapp.com",
-                    fechaNac = "12/03/1999",
-                    contra = "1234",
-                    nivel = 3,
-                    isEntrenador = false
-                )
-                val idNuevo = dao.insertUser(usuarioPrueba)
-                usuario = dao.getUserById(idNuevo)
             }
 
             val usuarioEncontrado = usuario
