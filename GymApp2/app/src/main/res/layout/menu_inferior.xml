@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp">
+
+    <!-- Barra negra -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/fondo_menu_barra"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <ImageView
+            android:id="@+id/btnMenuHome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="12dp"
+            android:contentDescription="@string/menu_home"
+            android:src="@drawable/ic_home" />
+
+        <ImageView
+            android:id="@+id/btnMenuCompletados"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="12dp"
+            android:contentDescription="@string/menu_completados"
+            android:src="@drawable/ic_completados" />
+
+        <!-- Hueco para el botón del centro -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btnMenuPerfil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="7dp"
+            android:contentDescription="@string/menu_perfil"
+            android:src="@drawable/ic_perfil"
+            app:tint="@color/texto_placeholder" />
+    </LinearLayout>
+
+    <!-- Puntos debajo del icono activo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+
+        <ImageView
+            android:id="@+id/puntoHome"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:scaleType="center"
+            android:src="@drawable/punto_menu"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/puntoCompletados"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:scaleType="center"
+            android:src="@drawable/punto_menu"
+            android:visibility="invisible" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/puntoPerfil"
+            android:layout_width="50dp"
+            android:layout_height="5dp"
+            android:scaleType="center"
+            android:src="@drawable/punto_menu"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <!-- Botón grande del centro -->
+    <ImageView
+        android:id="@+id/btnMenuWorkouts"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        android:layout_gravity="top|center_horizontal"
+        android:background="@drawable/fondo_boton_central"
+        android:padding="24dp"
+        android:contentDescription="@string/menu_workouts"
+        android:src="@drawable/logo_gymapp"
+        app:tint="@color/boton_principal_texto" />
+</FrameLayout>

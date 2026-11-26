@@ -2,4 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="fondo_pantalla">#FFFFFFFF</color>
+    <color name="fondo_tarjeta">#F6F6F6</color>
+    <color name="fondo_tarjeta_home">#EDEDED</color>
+    <color name="fondo_oscuro">#212121</color>
+    <color name="fondo_bloqueado">#EFEFEF</color>
+
+    <color name="texto_principal">#000000</color>
+    <color name="texto_secundario">#99000000</color>
+    <color name="texto_placeholder">#9A9A9A</color>
+    <color name="texto_sobre_oscuro">#FFFFFF</color>
+
+    <color name="borde_input">#9A9A9A</color>
+    <color name="linea">#D9D9D9</color>
+
+    <color name="completado">#B9EFC0</color>
+    <color name="error">#E53935</color>
+
+    <color name="nivel_novato">#2962B4</color>
+    <color name="nivel_principiante">#2E8B57</color>
+    <color name="nivel_intermedio">#B8860B</color>
+    <color name="nivel_avanzado">#BE1E2D</color>
+    <color name="nivel_experto">#6F2DA8</color>
+
+    <color name="boton_principal">#000000</color>
+    <color name="boton_principal_texto">#FFFFFF</color>
 </resources>

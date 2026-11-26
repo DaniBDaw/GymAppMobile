@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Títulos grandes (COMPLETADOS, PERFIL...) -->
+    <style name="Titulo">
+        <item name="android:fontFamily">@font/righteous</item>
+        <item name="fontFamily">@font/righteous</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/texto_principal</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Texto pequeño debajo del título -->
+    <style name="Subtitulo">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/texto_secundario</item>
+    </style>
+
+    <!-- Botón principal: negro con texto blanco -->
+    <style name="Boton.Negro" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/boton_principal</item>
+        <item name="android:textColor">@color/boton_principal_texto</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Botón secundario: blanco con borde negro -->
+    <style name="Boton.Blanco" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/texto_principal</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="android:textColor">@color/texto_principal</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Campos de texto (EditText) -->
+    <style name="Input">
+        <item name="android:background">@drawable/fondo_input</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/texto_principal</item>
+        <item name="android:textColorHint">@color/texto_placeholder</item>
+    </style>
+
+    <!-- Tarjetas (fondo gris redondeado) -->
+    <style name="Tarjeta">
+        <item name="android:background">@drawable/fondo_tarjeta</item>
+        <item name="android:padding">14dp</item>
+    </style>
+
+    <!-- Etiqueta pequeña encima de cada campo -->
+    <style name="Etiqueta">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/texto_secundario</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <!-- Cada opción de los selectores (CLARO / OSCURO, ES / EN / KA) -->
+    <style name="OpcionSelector">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/texto_principal</item>
+    </style>
+
+    <!-- Para que la foto salga redonda -->
+    <style name="ImagenCircular">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
