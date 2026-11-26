@@ -11,6 +11,7 @@ import es.elorrieta.app.gym_app.ui.HomeFragment
 import es.elorrieta.app.gym_app.ui.PerfilFragment
 import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.temp.TempWorkoutsFragment
+import es.elorrieta.app.gym_app.ui.LoginFragment
 
 object MenuInferior {
 
@@ -19,6 +20,8 @@ object MenuInferior {
     const val COMPLETADOS = 1
     const val WORKOUTS = 2
     const val PERFIL = 3
+
+    const val LOGIN = 4
 
     // La pantalla que se ve ahora y la anterior (para volver desde el Perfil)
     var pantallaActual = HOME
@@ -55,6 +58,7 @@ object MenuInferior {
             }
         })
 
+        mostrarMenu(activity, pantallaActual != LOGIN)
         actualizarIconos(activity)
     }
 
@@ -89,6 +93,7 @@ object MenuInferior {
         pantallaAnterior = pantallaActual
         pantallaActual = pantalla
         actualizarIconos(activity)
+        mostrarMenu(activity, true)
     }
 
     // Abre una pantalla "hija" encima de la actual (Ejercicios, Detalle...).
@@ -98,6 +103,29 @@ object MenuInferior {
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    // Muestra el Login (sin menú). Se usa al abrir la App y al cerrar sesión.
+    fun mostrarLogin(activity: AppCompatActivity) {
+        val gestor = activity.supportFragmentManager
+        gestor.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+        gestor.beginTransaction()
+            .replace(R.id.fragment_container, LoginFragment())
+            .commit()
+
+        pantallaActual = LOGIN
+        mostrarMenu(activity, false)
+    }
+
+    // Enseña u oculta el menú inferior
+    fun mostrarMenu(activity: AppCompatActivity, visible: Boolean) {
+        val menu = activity.findViewById<View>(R.id.menuInferior)
+        if (visible) {
+            menu.visibility = View.VISIBLE
+        } else {
+            menu.visibility = View.GONE
+        }
     }
 
     // Pinta el icono activo y pone el punto debajo

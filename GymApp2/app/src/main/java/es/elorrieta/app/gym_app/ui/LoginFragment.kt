@@ -1,51 +1,55 @@
+// =====================================================================
+// LoginFragment
+// Pantalla de Login (antes LoginActivity). Comprueba email y contraseña
+// contra ROOM, gestiona "Recuérdame" y el tipo de usuario, y guarda
+// el id del usuario logueado. Al entrar, va a Workouts y aparece el menú.
+// =====================================================================
 package es.elorrieta.app.gym_app.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import es.elorrieta.app.gym_app.util.Ajustes
 import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.data.prefs.PrefsManager
 import es.elorrieta.app.gym_app.database.AppDatabase
 import es.elorrieta.app.gym_app.database.UsuarioEntity
+import es.elorrieta.app.gym_app.util.Ajustes
+import es.elorrieta.app.gym_app.util.MenuInferior
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+    companion object {
+        // El Registro deja aquí el email nuevo para que el Login lo rellene solo
+        var emailRegistrado: String? = null
+    }
 
-        val etUsuario = findViewById<EditText>(R.id.etUsuario)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
-        val cbRecordar = findViewById<CheckBox>(R.id.cbRecordar)
-        val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val btnRegistro = findViewById<Button>(R.id.btnRegistro)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_login, container, false)
 
-        val usuarioDao = AppDatabase.getDatabase(this).usuarioDao()
-        val prefs = PrefsManager(this)
+        val etUsuario = view.findViewById<EditText>(R.id.etUsuario)
+        val etPassword = view.findViewById<EditText>(R.id.etPassword)
+        val cbRecordar = view.findViewById<CheckBox>(R.id.cbRecordar)
+        val btnLogin = view.findViewById<Button>(R.id.btnLogin)
+        val btnRegistro = view.findViewById<Button>(R.id.btnRegistro)
 
+        val usuarioDao = AppDatabase.getDatabase(requireContext()).usuarioDao()
+        val prefs = PrefsManager(requireContext())
 
-        val registroLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val emailRegistrado = result.data?.getStringExtra("email")
-                if (!emailRegistrado.isNullOrEmpty()) {
-                    etUsuario.setText(emailRegistrado)
-                    etPassword.text.clear()
-                    etPassword.requestFocus()
-                }
-            }
-        }
-
-
-        lifecycleScope.launch {
+        // Usuarios de prueba (cliente y entrenador) si no existen
+        viewLifecycleOwner.lifecycleScope.launch {
             if (usuarioDao.getUserByMail("cliente@gym.com") == null) {
                 usuarioDao.insertUser(
                     UsuarioEntity(
@@ -67,20 +71,28 @@ class LoginActivity : AppCompatActivity() {
                         mail = "entrenador@gym.com",
                         fechaNac = "01/01/1990",
                         contra = "1234",
-                        nivel = 5,
+                        nivel = 4,              // niveles de 0 (Novato) a 4 (Experto)
                         isEntrenador = true
                     )
                 )
             }
         }
 
-
+        // Recuérdame: si estaba activo, rellenamos los campos
         if (prefs.isRememberMeActivo()) {
             etUsuario.setText(prefs.getLoginGuardado())
             etPassword.setText(prefs.getPasswordGuardada())
             cbRecordar.isChecked = true
         }
 
+        // Si venimos del Registro, ponemos el email nuevo
+        val emailNuevo = emailRegistrado
+        if (emailNuevo != null) {
+            etUsuario.setText(emailNuevo)
+            etPassword.text.clear()
+            etPassword.requestFocus()
+            emailRegistrado = null
+        }
 
         cbRecordar.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) {
@@ -90,12 +102,10 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-
+        // Ir al Registro (pantalla hija: con "atrás" se vuelve al Login)
         btnRegistro.setOnClickListener {
-            val intent = Intent(this, Registro::class.java)
-            registroLauncher.launch(intent)
+            MenuInferior.abrirSubpantalla(requireActivity() as AppCompatActivity, RegistroFragment())
         }
-
 
         btnLogin.setOnClickListener {
             val email = etUsuario.text.toString().trim().lowercase()
@@ -110,12 +120,12 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val usuario = usuarioDao.getUserByMail(email)
 
                 if (usuario != null && usuario.contra == password) {
                     prefs.guardarSesionActual(usuario.mail)
-                    Ajustes.guardarIdUsuario(this@LoginActivity, usuario.id)
+                    Ajustes.guardarIdUsuario(requireContext(), usuario.id)
 
                     if (cbRecordar.isChecked) {
                         prefs.guardarRememberMe(email, password)
@@ -123,27 +133,22 @@ class LoginActivity : AppCompatActivity() {
                         prefs.borrarRememberMe()
                     }
 
-                    // Comprobar rol en la BD (isEntrenador)
                     if (usuario.isEntrenador) {
-                        Toast.makeText(this@LoginActivity, "Bienvenido Entrenador ${usuario.nombre}", Toast.LENGTH_SHORT).show()
-                        // Cambiar MainActivity por EntrenadorActivity cuando esté disponible
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("USER_ID", usuario.id)
-                        startActivity(intent)
+                        Toast.makeText(requireContext(), "Bienvenido Entrenador ${usuario.nombre}", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this@LoginActivity, "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
-                        // Cambiar MainActivity por WorkoutsActivity cuando esté disponible
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("USER_ID", usuario.id)
-                        startActivity(intent)
+                        Toast.makeText(requireContext(), "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
                     }
-                    finish()
+
+                    // Rúbrica: tras el login se va a la pantalla de Workouts (y aparece el menú)
+                    MenuInferior.mostrar(requireActivity() as AppCompatActivity, MenuInferior.WORKOUTS)
                 } else {
                     etUsuario.error = "Credenciales incorrectas"
                     etPassword.error = "Credenciales incorrectas"
-                    Toast.makeText(this@LoginActivity, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
+        return view
     }
 }

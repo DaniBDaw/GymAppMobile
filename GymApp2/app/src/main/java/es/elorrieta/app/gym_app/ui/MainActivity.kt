@@ -5,8 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import es.elorrieta.app.gym_app.util.MenuInferior
 import es.elorrieta.app.gym_app.R
+import es.elorrieta.app.gym_app.util.MenuInferior
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,9 +19,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        // Preparamos el menú inferior
         MenuInferior.configurar(this)
+
+        // Al abrir la App, lo primero es el Login (sin menú)
         if (savedInstanceState == null) {
-            MenuInferior.mostrar(this, MenuInferior.HOME)
+            MenuInferior.mostrarLogin(this)
         }
     }
 }

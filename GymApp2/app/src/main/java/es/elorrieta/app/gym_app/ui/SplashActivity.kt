@@ -71,8 +71,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun irAlLogin() {
-        // Cuando exista LoginActivity, cambiar MainActivity por LoginActivity
-        val intent = Intent(this, LoginActivity::class.java)
+        // MainActivity empieza mostrando el LoginFragment
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()
