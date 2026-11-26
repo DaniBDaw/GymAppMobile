@@ -1,4 +1,4 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,8 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import es.elorrieta.app.gym_app.ui.LoginActivity
+import es.elorrieta.app.gym_app.R
+import es.elorrieta.app.gym_app.util.Ajustes
 
 class SplashActivity : AppCompatActivity() {
 

@@ -1,4 +1,6 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.util
+
+import es.elorrieta.app.gym_app.R
 
 object Niveles {
 

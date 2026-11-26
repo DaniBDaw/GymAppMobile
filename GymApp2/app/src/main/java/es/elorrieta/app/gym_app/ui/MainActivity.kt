@@ -5,7 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import es.elorrieta.app.gym_app.MenuInferior
+import es.elorrieta.app.gym_app.util.MenuInferior
 import es.elorrieta.app.gym_app.R
 
 class MainActivity : AppCompatActivity() {

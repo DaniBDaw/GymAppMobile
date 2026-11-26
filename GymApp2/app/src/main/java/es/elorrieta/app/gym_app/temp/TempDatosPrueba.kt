@@ -1,6 +1,7 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.temp
 
 import android.content.Context
+import es.elorrieta.app.gym_app.util.Ajustes
 import es.elorrieta.app.gym_app.database.AppDatabase
 import es.elorrieta.app.gym_app.database.EjercicioEntity
 import es.elorrieta.app.gym_app.database.SerieEntity

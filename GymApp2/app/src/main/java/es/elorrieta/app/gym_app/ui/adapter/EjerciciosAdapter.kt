@@ -4,7 +4,7 @@
 // Rellena cada tarjeta (item_ejercicio.xml) con nombre, series, minutos,
 // color del nivel y si está completado, y avisa al Fragment de los clics.
 // =====================================================================
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.ui.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.database.EjercicioEntity
 
 // Un ejercicio + datos calculados a partir de sus series

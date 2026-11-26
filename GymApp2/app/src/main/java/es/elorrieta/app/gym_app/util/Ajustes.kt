@@ -1,4 +1,4 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.util
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate

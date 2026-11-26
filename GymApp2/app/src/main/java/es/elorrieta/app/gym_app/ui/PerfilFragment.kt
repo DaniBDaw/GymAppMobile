@@ -1,4 +1,4 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.ui
 
 import android.Manifest
 import android.app.DatePickerDialog
@@ -24,8 +24,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.database.AppDatabase
 import es.elorrieta.app.gym_app.database.UsuarioEntity
+import es.elorrieta.app.gym_app.util.Ajustes
+import es.elorrieta.app.gym_app.util.MenuInferior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File

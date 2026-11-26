@@ -1,9 +1,4 @@
-// =====================================================================
-// TempWorkoutsFragment (TEMPORAL)
-// Hueco para la pantalla de Workouts de DB. De momento solo tiene
-// un botón de prueba que abre Ejercicios con el primer workout.
-// =====================================================================
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.temp
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import es.elorrieta.app.gym_app.ui.EjerciciosFragment
+import es.elorrieta.app.gym_app.util.MenuInferior
+import es.elorrieta.app.gym_app.R
 
 class TempWorkoutsFragment : Fragment() {
 

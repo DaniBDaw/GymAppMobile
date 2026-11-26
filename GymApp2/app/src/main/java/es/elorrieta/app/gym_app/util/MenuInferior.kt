@@ -1,4 +1,4 @@
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.util
 
 import android.view.View
 import android.widget.ImageView
@@ -6,6 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import es.elorrieta.app.gym_app.ui.CompletadosFragment
+import es.elorrieta.app.gym_app.ui.HomeFragment
+import es.elorrieta.app.gym_app.ui.PerfilFragment
+import es.elorrieta.app.gym_app.R
+import es.elorrieta.app.gym_app.temp.TempWorkoutsFragment
 
 object MenuInferior {
 

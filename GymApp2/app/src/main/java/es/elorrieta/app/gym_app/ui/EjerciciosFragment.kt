@@ -1,10 +1,4 @@
-// =====================================================================
-// EjerciciosFragment
-// Pantalla con los ejercicios de un workout: nombre, nivel, vídeo,
-// buscador, progreso, lista (RecyclerView) y marcar/desmarcar workout.
-// Se abre desde Workouts pasándole el id del workout en un Bundle.
-// =====================================================================
-package es.elorrieta.app.gym_app
+package es.elorrieta.app.gym_app.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,8 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import es.elorrieta.app.gym_app.ui.adapter.EjercicioItem
+import es.elorrieta.app.gym_app.ui.adapter.EjerciciosAdapter
+import es.elorrieta.app.gym_app.R
 import es.elorrieta.app.gym_app.database.AppDatabase
 import es.elorrieta.app.gym_app.database.WorkoutEntity
+import es.elorrieta.app.gym_app.temp.TempDatosPrueba
+import es.elorrieta.app.gym_app.util.Niveles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -45,17 +44,18 @@ class EjerciciosFragment : Fragment() {
     private var listaEjercicios: MutableList<EjercicioItem> = mutableListOf()
 
     // Adapter de la lista; aquí recibimos los clics de cada tarjeta
-    private val adaptador = EjerciciosAdapter(mutableListOf(), object : EjerciciosAdapter.EjercicioListener {
-        override fun alPulsarEjercicio(item: EjercicioItem) {
-            // Parte 5: abrir el detalle del ejercicio
-        }
+    private val adaptador =
+        EjerciciosAdapter(mutableListOf(), object : EjerciciosAdapter.EjercicioListener {
+            override fun alPulsarEjercicio(item: EjercicioItem) {
+                // Parte 5: abrir el detalle del ejercicio
+            }
 
-        override fun alMarcarEjercicio(item: EjercicioItem, marcado: Boolean) {
-            // Parte 4: marcar / desmarcar en ROOM.
-            // De momento repintamos para que el check vuelva a como estaba.
-            refrescarLista()
-        }
-    })
+            override fun alMarcarEjercicio(item: EjercicioItem, marcado: Boolean) {
+                // Parte 4: marcar / desmarcar en ROOM.
+                // De momento repintamos para que el check vuelva a como estaba.
+                refrescarLista()
+            }
+        })
 
     override fun onCreateView(
         inflater: LayoutInflater,
