@@ -1,6 +1,6 @@
 package es.elorrieta.app.gym_app.ui
 
-
+import es.elorrieta.app.gym_app.util.Progreso
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -53,16 +53,15 @@ class EjerciciosFragment : Fragment() {
     private var textoBusqueda = ""
 
     // Adapter de la lista; aquí recibimos los clics de cada tarjeta
+    // Adapter de la lista; aquí recibimos los clics de cada tarjeta
     private val adaptador =
         EjerciciosAdapter(mutableListOf(), object : EjerciciosAdapter.EjercicioListener {
             override fun alPulsarEjercicio(item: EjercicioItem) {
-                // Parte 5: abrir el detalle del ejercicio
+                // Paso 9: abrir el detalle del ejercicio
             }
 
             override fun alMarcarEjercicio(item: EjercicioItem, marcado: Boolean) {
-                // Parte 4: marcar / desmarcar en ROOM.
-                // De momento repintamos para que el check vuelva a como estaba.
-                refrescarLista()
+                cambiarEjercicio(item, marcado)
             }
         })
 
@@ -86,6 +85,7 @@ class EjerciciosFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adaptador
         configurarBuscador(view)
+        configurarBotonesWorkout(view)
 
         cargarDatos(view)
 
@@ -277,6 +277,88 @@ class EjerciciosFragment : Fragment() {
             btnMarcar.visibility = View.VISIBLE
             btnDesmarcar.visibility = View.GONE
         }
+    }
+
+
+    // ---------------- MARCAR / DESMARCAR ----------------
+
+    // Check de un ejercicio de la lista
+    private fun cambiarEjercicio(item: EjercicioItem, marcado: Boolean) {
+        val contexto = requireContext()
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            val nivelNuevo: Int
+            if (marcado) {
+                nivelNuevo = Progreso.marcarEjercicio(contexto, item.ejercicio)
+            } else {
+                nivelNuevo = Progreso.desmarcarEjercicio(contexto, item.ejercicio)
+            }
+
+            launch(Dispatchers.Main) {
+                avisarCambioNivel(nivelNuevo, marcado)
+                val view = getView()
+                if (view != null) {
+                    cargarDatos(view)   // recargamos para ver los cambios
+                }
+            }
+        }
+    }
+
+    // Botones "Marcar workout completo" y "Desmarcar workout"
+    private fun configurarBotonesWorkout(view: View) {
+        val btnMarcar = view.findViewById<Button>(R.id.btnMarcarWorkout)
+        val btnDesmarcar = view.findViewById<Button>(R.id.btnDesmarcarWorkout)
+
+        btnMarcar.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                cambiarWorkout(true)
+            }
+        })
+
+        btnDesmarcar.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                cambiarWorkout(false)
+            }
+        })
+    }
+
+    private fun cambiarWorkout(completar: Boolean) {
+        val workout = workoutActual
+        if (workout == null) {
+            return
+        }
+        val contexto = requireContext()
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            val nivelNuevo: Int
+            if (completar) {
+                nivelNuevo = Progreso.completarWorkout(contexto, workout)
+            } else {
+                nivelNuevo = Progreso.desmarcarWorkout(contexto, workout)
+            }
+
+            launch(Dispatchers.Main) {
+                avisarCambioNivel(nivelNuevo, completar)
+                val view = getView()
+                if (view != null) {
+                    cargarDatos(view)
+                }
+            }
+        }
+    }
+
+    // Si el nivel ha cambiado, se lo decimos al usuario
+    private fun avisarCambioNivel(nivelNuevo: Int, subiendo: Boolean) {
+        if (nivelNuevo == -1) {
+            return
+        }
+        val nombreNivel = getString(Niveles.nombres[Niveles.posicion(nivelNuevo)])
+        val texto: String
+        if (subiendo) {
+            texto = getString(R.string.nivel_subido, nombreNivel)
+        } else {
+            texto = getString(R.string.nivel_bajado, nombreNivel)
+        }
+        Toast.makeText(requireContext(), texto, Toast.LENGTH_LONG).show()
     }
 
     private fun mostrarMensaje(idTexto: Int) {
