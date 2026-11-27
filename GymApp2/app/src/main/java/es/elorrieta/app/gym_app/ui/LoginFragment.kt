@@ -6,6 +6,8 @@
 // =====================================================================
 package es.elorrieta.app.gym_app.ui
 
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +46,25 @@ class LoginFragment : Fragment() {
         val cbRecordar = view.findViewById<CheckBox>(R.id.cbRecordar)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
         val btnRegistro = view.findViewById<Button>(R.id.btnRegistro)
+
+        // Selector de tipo de usuario (Cliente / Entrenador)
+        val btnTipoCliente = view.findViewById<TextView>(R.id.btnTipoCliente)
+        val btnTipoEntrenador = view.findViewById<TextView>(R.id.btnTipoEntrenador)
+        var esEntrenador = false
+
+        btnTipoCliente.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                esEntrenador = false
+                marcarTipo(btnTipoCliente, btnTipoEntrenador)
+            }
+        })
+
+        btnTipoEntrenador.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                esEntrenador = true
+                marcarTipo(btnTipoEntrenador, btnTipoCliente)
+            }
+        })
 
         val usuarioDao = AppDatabase.getDatabase(requireContext()).usuarioDao()
         val prefs = PrefsManager(requireContext())
@@ -124,6 +145,12 @@ class LoginFragment : Fragment() {
                 val usuario = usuarioDao.getUserByMail(email)
 
                 if (usuario != null && usuario.contra == password) {
+                    // El tipo elegido tiene que coincidir con el de la BD
+                    if (usuario.isEntrenador != esEntrenador) {
+                        Toast.makeText(requireContext(), getString(R.string.error_tipo_usuario), Toast.LENGTH_SHORT).show()
+                        return@launch
+                    }
+
                     prefs.guardarSesionActual(usuario.mail)
                     Ajustes.guardarIdUsuario(requireContext(), usuario.id)
 
@@ -150,5 +177,13 @@ class LoginFragment : Fragment() {
         }
 
         return view
+    }
+
+    // Pone en negro la opción elegida y la otra sin fondo
+    private fun marcarTipo(elegida: TextView, otra: TextView) {
+        elegida.setBackgroundResource(R.drawable.fondo_opcion_activa)
+        elegida.setTextColor(ContextCompat.getColor(requireContext(), R.color.boton_principal_texto))
+        otra.background = null
+        otra.setTextColor(ContextCompat.getColor(requireContext(), R.color.texto_principal))
     }
 }

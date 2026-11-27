@@ -159,4 +159,7 @@
     <!-- Descripciones de imágenes (accesibilidad) -->
     <string name="desc_logo">Logo de GymApp</string>
     <string name="desc_foto_perfil">Foto de perfil</string>
+
+    <!-- Tipo de Usuario Incorrecto -->
+    <string name="error_tipo_usuario">Tipo de usuario incorrecto</string>
 </resources>

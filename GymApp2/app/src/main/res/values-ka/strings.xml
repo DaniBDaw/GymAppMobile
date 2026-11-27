@@ -152,4 +152,7 @@
     <!-- Descripciones de imágenes (accesibilidad) -->
     <string name="desc_logo">GymApp-ის ლოგო</string>
     <string name="desc_foto_perfil">პროფილის ფოტო</string>
+
+    <!-- Tipo de Usuario Incorrecto -->
+    <string name="error_tipo_usuario">Wrong user type</string>
 </resources>
