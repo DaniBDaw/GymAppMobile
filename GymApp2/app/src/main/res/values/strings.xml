@@ -162,4 +162,7 @@
 
     <!-- Tipo de Usuario Incorrecto -->
     <string name="error_tipo_usuario">Tipo de usuario incorrecto</string>
+
+    <string name="registro_omitir">Omitir</string>
+    <string name="registro_completar">Completar</string>
 </resources>

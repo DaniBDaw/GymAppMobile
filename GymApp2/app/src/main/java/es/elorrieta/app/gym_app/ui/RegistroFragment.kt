@@ -7,6 +7,7 @@
 // =====================================================================
 package es.elorrieta.app.gym_app.ui
 
+import android.widget.TextView
 import android.Manifest
 import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteConstraintException
@@ -43,10 +44,15 @@ class RegistroFragment : Fragment() {
     private var fotoTomada: Bitmap? = null
 
     // Callback: la cámara devuelve la foto
+    // Callback: la cámara devuelve la foto
     private val abrirCamara = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap: Bitmap? ->
         if (bitmap != null) {
             fotoTomada = bitmap
-            requireView().findViewById<ImageView>(R.id.CameraIcon).setImageBitmap(bitmap)
+            val imagen = requireView().findViewById<ImageView>(R.id.CameraIcon)
+            imagen.imageTintList = null          // quitamos el color blanco del icono
+            imagen.setPadding(0, 0, 0, 0)        // la foto ocupa todo el círculo
+            imagen.setImageBitmap(bitmap)
+            requireView().findViewById<Button>(R.id.BtnRegisterContinuar).setText(R.string.registro_completar)
         }
     }
 
@@ -82,6 +88,11 @@ class RegistroFragment : Fragment() {
 
         val cameraIcon = view.findViewById<ImageView>(R.id.CameraIcon)
 
+        // Círculos de la barra de pasos
+        val paso1 = view.findViewById<TextView>(R.id.paso1)
+        val paso2 = view.findViewById<TextView>(R.id.paso2)
+        val paso3 = view.findViewById<TextView>(R.id.paso3)
+
         email.visibility = View.GONE
         contra.visibility = View.GONE
         confirmContra.visibility = View.GONE
@@ -92,6 +103,28 @@ class RegistroFragment : Fragment() {
         // Email sin espacios y en minúsculas, para no registrar el mismo dos veces
         fun emailNormalizado(): String {
             return email.text.toString().trim().lowercase()
+        }
+
+        // Pinta la barra: pasos hechos con ✓, el actual en negro, los siguientes vacíos
+        fun pintarPasos() {
+            val circulos = arrayOf(paso1, paso2, paso3)
+            for (i in 0..2) {
+                val numero = i + 1
+                val circulo = circulos[i]
+                if (numero < paso) {
+                    circulo.text = "✓"
+                    circulo.setBackgroundResource(R.drawable.fondo_paso)
+                    circulo.setTextColor(ContextCompat.getColor(requireContext(), R.color.texto_principal))
+                } else if (numero == paso) {
+                    circulo.text = numero.toString()
+                    circulo.setBackgroundResource(R.drawable.fondo_paso_activo)
+                    circulo.setTextColor(ContextCompat.getColor(requireContext(), R.color.boton_principal_texto))
+                } else {
+                    circulo.text = numero.toString()
+                    circulo.setBackgroundResource(R.drawable.fondo_paso)
+                    circulo.setTextColor(ContextCompat.getColor(requireContext(), R.color.texto_principal))
+                }
+            }
         }
 
         // Enseña los campos del paso actual
@@ -125,8 +158,13 @@ class RegistroFragment : Fragment() {
                 confirmContra.visibility = View.GONE
 
                 cameraIcon.visibility = View.VISIBLE
-                continuar.setText(R.string.registro_boton)
+                if (fotoTomada == null) {
+                    continuar.setText(R.string.registro_omitir)
+                } else {
+                    continuar.setText(R.string.registro_completar)
+                }
             }
+            pintarPasos()
         }
 
         // Comprueba en la BD si el email ya existe. Si no existe, pasa al paso 3.
@@ -236,6 +274,8 @@ class RegistroFragment : Fragment() {
             }
             actualizarVista()
         }
+
+        actualizarVista()
 
         volver.setOnClickListener {
             gestionarPaso(false)

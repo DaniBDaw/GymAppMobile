@@ -1,141 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Registro">
+    android:background="@color/fondo_pantalla"
+    android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/InputContra"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/registro_password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp">
 
-    <EditText
-        android:id="@+id/InputNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/registro_nombre"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346" />
+        <!-- Logo + nombre -->
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:contentDescription="@string/desc_logo"
+            android:src="@drawable/logo_gymapp"
+            app:tint="@color/texto_principal" />
 
-    <EditText
-        android:id="@+id/InputEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/registro_email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/righteous"
+            android:text="@string/app_name"
+            android:textColor="@color/texto_principal"
+            android:textSize="28sp"
+            app:fontFamily="@font/righteous" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.226" />
+        <!-- Barra de pasos: (1) — (2) — (3) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/InputApellido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/registro_apellidos"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476" />
+            <TextView
+                android:id="@+id/paso1"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/fondo_paso_activo"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/boton_principal_texto"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/BtnRegisterVolver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/volver"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.732" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/texto_principal" />
 
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/registro_fecha_nacimiento"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.593" />
+            <TextView
+                android:id="@+id/paso2"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/fondo_paso"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/texto_principal"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/BtnRegisterContinuar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/continuar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.753"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.732" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/texto_principal" />
 
-    <EditText
-        android:id="@+id/InputConfirmContra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/registro_repetir_password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.593" />
+            <TextView
+                android:id="@+id/paso3"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/fondo_paso"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/texto_principal"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-    <ImageView
-        android:id="@+id/CameraIcon"
-        android:layout_width="449dp"
-        android:layout_height="440dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24"
-        app:srcCompat="@mipmap/camera_icon_foreground" />
+        <!-- PASO 1: nombre, apellidos, fecha -->
+        <EditText
+            android:id="@+id/InputNombre"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:hint="@string/registro_nombre"
+            android:inputType="textPersonName"
+            android:minHeight="44dp"
+            android:textSize="13sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/InputApellido"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:hint="@string/registro_apellidos"
+            android:inputType="textPersonName"
+            android:minHeight="44dp"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableEnd="@drawable/ic_calendario"
+            android:drawableTint="@color/texto_principal"
+            android:gravity="center"
+            android:hint="@string/registro_fecha_nacimiento"
+            android:inputType="none"
+            android:minHeight="44dp"
+            android:textSize="13sp" />
+
+        <!-- PASO 2: email y contraseñas -->
+        <EditText
+            android:id="@+id/InputEmail"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:hint="@string/registro_email"
+            android:inputType="textEmailAddress"
+            android:minHeight="44dp"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/InputContra"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:hint="@string/registro_password"
+            android:inputType="textPassword"
+            android:minHeight="44dp"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/InputConfirmContra"
+            style="@style/Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:hint="@string/registro_repetir_password"
+            android:inputType="textPassword"
+            android:minHeight="44dp"
+            android:textSize="13sp" />
+
+        <!-- PASO 3: foto (círculo negro con cámara; luego la foto en redondo) -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/CameraIcon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fondo_paso_activo"
+            android:contentDescription="@string/registro_foto"
+            android:padding="44dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_camara"
+            app:shapeAppearanceOverlay="@style/ImagenCircular"
+            app:tint="@color/boton_principal_texto" />
+
+        <!-- Botones -->
+        <Button
+            android:id="@+id/BtnRegisterContinuar"
+            style="@style/Boton.Negro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="44dp"
+            android:text="@string/continuar"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/BtnRegisterVolver"
+            style="@style/Boton.Blanco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="44dp"
+            android:text="@string/volver"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>
