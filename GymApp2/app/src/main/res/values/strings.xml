@@ -165,4 +165,7 @@
 
     <string name="registro_omitir">Omitir</string>
     <string name="registro_completar">Completar</string>
+
+    <string name="login_bienvenido">Bienvenido, %1$s</string>
+    <string name="login_bienvenido_entrenador">Bienvenido entrenador, %1$s</string>
 </resources>

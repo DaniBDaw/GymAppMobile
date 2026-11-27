@@ -158,4 +158,7 @@
 
     <string name="registro_omitir">გამოტოვება</string>
     <string name="registro_completar">დასრულება</string>
+
+    <string name="login_bienvenido">მოგესალმებით, %1$s</string>
+    <string name="login_bienvenido_entrenador">მოგესალმებით მწვრთნელო, %1$s</string>
 </resources>

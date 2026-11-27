@@ -1,13 +1,12 @@
 // =====================================================================
 // LoginFragment
 // Pantalla de Login (antes LoginActivity). Comprueba email y contraseña
-// contra ROOM, gestiona "Recuérdame" y el tipo de usuario, y guarda
-// el id del usuario logueado. Al entrar, va a Workouts y aparece el menú.
+// contra ROOM, gestiona "Recuérdame" y guarda el id del usuario logueado.
+// El tipo de usuario (cliente/entrenador) se detecta desde la BD (isEntrenador).
+// Al entrar, va a Workouts y aparece el menú.
 // =====================================================================
 package es.elorrieta.app.gym_app.ui
 
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,25 +45,6 @@ class LoginFragment : Fragment() {
         val cbRecordar = view.findViewById<CheckBox>(R.id.cbRecordar)
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
         val btnRegistro = view.findViewById<Button>(R.id.btnRegistro)
-
-        // Selector de tipo de usuario (Cliente / Entrenador)
-        val btnTipoCliente = view.findViewById<TextView>(R.id.btnTipoCliente)
-        val btnTipoEntrenador = view.findViewById<TextView>(R.id.btnTipoEntrenador)
-        var esEntrenador = false
-
-        btnTipoCliente.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                esEntrenador = false
-                marcarTipo(btnTipoCliente, btnTipoEntrenador)
-            }
-        })
-
-        btnTipoEntrenador.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                esEntrenador = true
-                marcarTipo(btnTipoEntrenador, btnTipoCliente)
-            }
-        })
 
         val usuarioDao = AppDatabase.getDatabase(requireContext()).usuarioDao()
         val prefs = PrefsManager(requireContext())
@@ -133,11 +113,11 @@ class LoginFragment : Fragment() {
             val password = etPassword.text.toString()
 
             if (email.isEmpty()) {
-                etUsuario.error = "Introduce tu email"
+                etUsuario.error = getString(R.string.error_campos_vacios)
                 return@setOnClickListener
             }
             if (password.isEmpty()) {
-                etPassword.error = "Introduce tu contraseña"
+                etPassword.error = getString(R.string.error_campos_vacios)
                 return@setOnClickListener
             }
 
@@ -145,12 +125,6 @@ class LoginFragment : Fragment() {
                 val usuario = usuarioDao.getUserByMail(email)
 
                 if (usuario != null && usuario.contra == password) {
-                    // El tipo elegido tiene que coincidir con el de la BD
-                    if (usuario.isEntrenador != esEntrenador) {
-                        Toast.makeText(requireContext(), getString(R.string.error_tipo_usuario), Toast.LENGTH_SHORT).show()
-                        return@launch
-                    }
-
                     prefs.guardarSesionActual(usuario.mail)
                     Ajustes.guardarIdUsuario(requireContext(), usuario.id)
 
@@ -160,30 +134,23 @@ class LoginFragment : Fragment() {
                         prefs.borrarRememberMe()
                     }
 
+                    // El tipo de usuario viene de la BD
                     if (usuario.isEntrenador) {
-                        Toast.makeText(requireContext(), "Bienvenido Entrenador ${usuario.nombre}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.login_bienvenido_entrenador, usuario.nombre), Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(requireContext(), "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.login_bienvenido, usuario.nombre), Toast.LENGTH_SHORT).show()
                     }
 
                     // Rúbrica: tras el login se va a la pantalla de Workouts (y aparece el menú)
                     MenuInferior.mostrar(requireActivity() as AppCompatActivity, MenuInferior.WORKOUTS)
                 } else {
-                    etUsuario.error = "Credenciales incorrectas"
-                    etPassword.error = "Credenciales incorrectas"
-                    Toast.makeText(requireContext(), "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                    etUsuario.error = getString(R.string.error_login)
+                    etPassword.error = getString(R.string.error_login)
+                    Toast.makeText(requireContext(), getString(R.string.error_login), Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         return view
-    }
-
-    // Pone en negro la opción elegida y la otra sin fondo
-    private fun marcarTipo(elegida: TextView, otra: TextView) {
-        elegida.setBackgroundResource(R.drawable.fondo_opcion_activa)
-        elegida.setTextColor(ContextCompat.getColor(requireContext(), R.color.boton_principal_texto))
-        otra.background = null
-        otra.setTextColor(ContextCompat.getColor(requireContext(), R.color.texto_principal))
     }
 }
