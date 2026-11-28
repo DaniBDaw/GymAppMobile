@@ -1,25 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollWorkouts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondo_pantalla"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-    <TextView
-        style="@style/Titulo"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_workouts" />
-
-    <!-- SOLO PARA PRUEBAS: abre Ejercicios hasta que esté la pantalla real de Workouts -->
-    <Button
-        android:id="@+id/btnProbarEjercicios"
-        style="@style/Boton.Negro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:orientation="vertical"
         android:paddingStart="24dp"
+        android:paddingTop="24dp"
         android:paddingEnd="24dp"
-        android:text="@string/ejercicios_titulo" />
-</LinearLayout>
+        android:paddingBottom="120dp">
+
+        <!-- Cabecera: logo + título + nivel del usuario -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:contentDescription="@string/desc_logo"
+                android:src="@drawable/logo_gymapp"
+                app:tint="@color/texto_principal" />
+
+            <TextView
+                style="@style/Titulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/workouts_titulo" />
+
+            <!-- Nivel del usuario -->
+            <ImageView
+                android:id="@+id/imgNivelUsuario"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_rombo" />
+
+            <TextView
+                android:id="@+id/txtNivelUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- "7 workouts disponibles" -->
+        <TextView
+            android:id="@+id/txtDisponibles"
+            style="@style/Subtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" />
+
+        <!-- Filtro por nivel: TODOS + los 5 niveles -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/filtroNiveles"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- Mensaje si no hay workouts -->
+        <TextView
+            android:id="@+id/txtSinWorkouts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/error_sin_workouts"
+            android:textColor="@color/texto_secundario"
+            android:visibility="gone" />
+
+        <!-- Lista de workouts -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerWorkouts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:nestedScrollingEnabled="false" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

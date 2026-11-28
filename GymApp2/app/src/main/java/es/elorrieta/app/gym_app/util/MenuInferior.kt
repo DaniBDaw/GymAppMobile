@@ -1,5 +1,6 @@
 package es.elorrieta.app.gym_app.util
 
+import es.elorrieta.app.gym_app.ui.WorkoutsFragment
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,6 @@ import es.elorrieta.app.gym_app.ui.CompletadosFragment
 import es.elorrieta.app.gym_app.ui.HomeFragment
 import es.elorrieta.app.gym_app.ui.PerfilFragment
 import es.elorrieta.app.gym_app.R
-import es.elorrieta.app.gym_app.temp.TempWorkoutsFragment
 import es.elorrieta.app.gym_app.ui.LoginFragment
 
 object MenuInferior {
@@ -79,7 +79,7 @@ object MenuInferior {
         if (pantalla == COMPLETADOS) {
             fragment = CompletadosFragment()
         } else if (pantalla == WORKOUTS) {
-            fragment = TempWorkoutsFragment()
+            fragment = WorkoutsFragment()
         } else if (pantalla == PERFIL) {
             fragment = PerfilFragment()
         } else {

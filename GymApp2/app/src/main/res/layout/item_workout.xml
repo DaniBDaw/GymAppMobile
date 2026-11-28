@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fondoWorkout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/fondo_tarjeta"
+    android:gravity="center_vertical"
+    android:minHeight="76dp"
+    android:orientation="horizontal">
+
+    <!-- Franja de color del nivel -->
+    <View
+        android:id="@+id/franjaNivelWorkout"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@color/nivel_novato" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Nombre -->
+        <TextView
+            android:id="@+id/txtNombreWorkoutItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/righteous"
+            android:textColor="@color/texto_principal"
+            android:textSize="16sp"
+            app:fontFamily="@font/righteous" />
+
+        <!-- Nivel · ejercicios · minutos -->
+        <TextView
+            android:id="@+id/txtInfoWorkoutItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/texto_secundario"
+            android:textSize="11sp" />
+
+        <!-- % de ejercicios completados -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/barraWorkoutItem"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progressBackgroundTint="@color/linea"
+                android:progressTint="@color/texto_principal" />
+
+            <TextView
+                android:id="@+id/txtPorcentajeWorkoutItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/texto_secundario"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botón de vídeo (solo si el workout tiene vídeo) -->
+    <FrameLayout
+        android:id="@+id/btnVideoWorkout"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/fondo_cuadro_video"
+        android:contentDescription="@string/workout_ver_video">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_play_circulo"
+            app:tint="@color/texto_principal" />
+    </FrameLayout>
+</LinearLayout>
