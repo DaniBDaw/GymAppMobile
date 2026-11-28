@@ -11,9 +11,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logogymapp"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logogymapp_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GymApp">
 
@@ -25,14 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.LoginActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.Registro"
-            android:exported="false" />
 
         <activity
             android:name=".ui.MainActivity"
